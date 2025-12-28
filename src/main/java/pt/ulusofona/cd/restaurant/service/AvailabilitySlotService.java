@@ -35,12 +35,12 @@ public class AvailabilitySlotService {
     }
 
     public List<AvailabilitySlot> getSlotsByRestaurantAndDate(UUID restaurantId, LocalDate date) {
-        return availabilitySlotRepository.findByRestaurantIdAndDate(restaurantId, date);
+        return availabilitySlotRepository.findByRestaurantIdAndSlotDate(restaurantId, date);
     }
 
     public List<AvailabilitySlot> getSlotsByRestaurantAndDateTime(UUID restaurantId, LocalDate date, LocalTime time) {
         return availabilitySlotRepository
-                .findByRestaurantIdAndDateAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
+                .findByRestaurantIdAndSlotDateAfterAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
                         restaurantId, date, time, time
                 );
     }
@@ -56,7 +56,7 @@ public class AvailabilitySlotService {
                 .findByIdAndRestaurantId(slotId, restaurantId)
                 .orElseThrow(() -> new AvailabilitySlotNotFoundException("Slot não encontrado para este restaurante: " + slotId));
 
-        slot.setDate(request.getDate());
+        slot.setSlotDate(request.getSlotDate());
         slot.setStartTime(request.getStartTime());
         slot.setEndTime(request.getEndTime());
         slot.setCapacity(request.getCapacity());

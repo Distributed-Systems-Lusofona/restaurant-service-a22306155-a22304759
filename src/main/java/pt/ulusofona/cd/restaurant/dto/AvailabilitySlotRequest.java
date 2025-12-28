@@ -13,10 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AvailabilitySlotRequest {
     @NotNull
-    private UUID restaurantId;
-
-    @NotNull
-    private LocalDate date;
+    private LocalDate slotDate;
 
     @NotNull
     private LocalTime startTime;

@@ -11,9 +11,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MenuItemRequest {
-    @NotNull(message = "O id do restaurante é obrigatório")
-    private UUID restaurantId;
-
     @NotBlank(message = "O nome do prato é obrigatório")
     @Size(max = 255, message = "O nome do prato não pode ter mais de 255 caracteres")
     private String name;

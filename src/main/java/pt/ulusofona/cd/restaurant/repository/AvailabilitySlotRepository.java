@@ -15,11 +15,11 @@ public interface AvailabilitySlotRepository extends JpaRepository<AvailabilitySl
 
     List<AvailabilitySlot> findByRestaurantId(UUID restaurantId);
 
-    List<AvailabilitySlot> findByRestaurantIdAndDate(UUID restaurantId, LocalDate date);
+    List<AvailabilitySlot> findByRestaurantIdAndSlotDate(UUID restaurantId, LocalDate slotDate);
 
-    List<AvailabilitySlot> findByRestaurantIdAndDateAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
+    List<AvailabilitySlot> findByRestaurantIdAndSlotDateAfterAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
             UUID restaurantId,
-            LocalDate date,
+            LocalDate slotDate,
             LocalTime startTime,
             LocalTime endTime
     );

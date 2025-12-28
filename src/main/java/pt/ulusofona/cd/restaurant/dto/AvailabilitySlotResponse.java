@@ -13,7 +13,7 @@ import java.util.UUID;
 public class AvailabilitySlotResponse {
     private UUID id;
     private UUID restaurantId;
-    private LocalDate date;
+    private LocalDate slotDate;
     private LocalTime startTime;
     private LocalTime endTime;
     private int capacity;

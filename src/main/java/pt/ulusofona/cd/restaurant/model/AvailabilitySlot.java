@@ -26,8 +26,8 @@ public class AvailabilitySlot {
     private Restaurant restaurant;
 
     @NotNull
-    @Column(name = "date", nullable = false)
-    private LocalDate date;
+    @Column(name = "slotDate", nullable = false)
+    private LocalDate slotDate;
 
     @NotNull
     @Column(name = "start_time", nullable = false)
