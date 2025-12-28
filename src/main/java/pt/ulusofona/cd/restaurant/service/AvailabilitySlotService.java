@@ -27,7 +27,6 @@ public class AvailabilitySlotService {
     public AvailabilitySlot createSlot(UUID restaurantId, AvailabilitySlotRequest request) {
         Restaurant restaurant = restaurantService.getRestaurantsById(restaurantId);
         AvailabilitySlot slot = AvailabilitySlotMapper.toEntity(request, restaurant);
-
         return availabilitySlotRepository.save(slot);
     }
 
