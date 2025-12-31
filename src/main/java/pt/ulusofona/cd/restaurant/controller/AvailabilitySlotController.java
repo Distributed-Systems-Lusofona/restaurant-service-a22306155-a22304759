@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pt.ulusofona.cd.restaurant.dto.AvailabilitySlotRequest;
 import pt.ulusofona.cd.restaurant.dto.AvailabilitySlotResponse;
+import pt.ulusofona.cd.restaurant.dto.SeatsDto;
 import pt.ulusofona.cd.restaurant.mapper.AvailabilitySlotMapper;
 import pt.ulusofona.cd.restaurant.model.AvailabilitySlot;
 import pt.ulusofona.cd.restaurant.service.AvailabilitySlotService;
@@ -37,12 +38,42 @@ public class AvailabilitySlotController {
                 .body(AvailabilitySlotMapper.toResponse(created));
     }
 
+    // Reserva lugares da slot
+    @PostMapping("/reserve")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void reserveSeats(
+            @PathVariable UUID restaurantId,
+            @Valid @RequestBody SeatsDto request
+    ) {
+        availabilitySlotService.reserveSeats(
+                restaurantId,
+                request.getAvailabilitySlotId(),
+                request.getSeats()
+        );
+    }
+
+    // Devolve lugares da slot que foi tirada
+    @PostMapping("/release")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void releaseSeats(
+            @PathVariable UUID restaurantId,
+            @Valid @RequestBody SeatsDto request
+    ) {
+        availabilitySlotService.releaseSeats(
+                restaurantId,
+                request.getAvailabilitySlotId(),
+                request.getSeats()
+        );
+    }
+
     @GetMapping
     public ResponseEntity<List<AvailabilitySlotResponse>> getSlotsByRestaurant(
             @PathVariable UUID restaurantId,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) LocalTime time
+            @RequestParam(required = false) LocalDate date,
+            @RequestParam(required = false) LocalTime time,
+            @RequestParam(required = false) int partySize
     ) {
+
         List<AvailabilitySlot> slotsEntity;
 
         if (date != null && time != null) {
@@ -51,6 +82,12 @@ public class AvailabilitySlotController {
             slotsEntity = availabilitySlotService.getSlotsByRestaurantAndDate(restaurantId, date);
         } else {
             slotsEntity = availabilitySlotService.getSlotsByRestaurant(restaurantId);
+        }
+
+        if (partySize > 0) {
+            slotsEntity = slotsEntity.stream()
+                    .filter(slot -> slot.getSeatsAvailable() >= partySize)
+                    .toList();
         }
 
         List<AvailabilitySlotResponse> slots = slotsEntity.stream()

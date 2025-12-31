@@ -37,8 +37,7 @@ public class MenuItemController {
     public ResponseEntity<List<MenuItemResponse>> getAllByRestaurant(
             @PathVariable UUID restaurantId
     ) {
-        List<MenuItem> items =
-                menuItemService.getMenuItemsByRestaurant(restaurantId);
+        List<MenuItem> items = menuItemService.getMenuItemsByRestaurant(restaurantId);
 
         return ResponseEntity.ok(
                 items.stream()

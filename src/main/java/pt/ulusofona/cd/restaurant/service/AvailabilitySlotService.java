@@ -40,9 +40,29 @@ public class AvailabilitySlotService {
 
     public List<AvailabilitySlot> getSlotsByRestaurantAndDateTime(UUID restaurantId, LocalDate date, LocalTime time) {
         return availabilitySlotRepository
-                .findByRestaurantIdAndSlotDateAfterAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
+                .findByRestaurantIdAndSlotDateAndStartTimeLessThanEqualAndEndTimeGreaterThanEqual(
                         restaurantId, date, time, time
                 );
+    }
+
+
+
+        @Transactional
+    public void releaseSeats(UUID restaurantId, UUID slotId, int seatsToRelease) {
+        AvailabilitySlot slot = getSlotById(restaurantId, slotId);
+
+        slot.setSeatsAvailable(slot.getSeatsAvailable() + seatsToRelease);
+
+        availabilitySlotRepository.save(slot);
+    }
+
+    @Transactional
+    public void reserveSeats(UUID restaurantId, UUID slotId, int seatsToReserve) {
+        AvailabilitySlot slot = getSlotById(restaurantId, slotId);
+
+        slot.setSeatsAvailable(slot.getSeatsAvailable() - seatsToReserve);
+
+        availabilitySlotRepository.save(slot);
     }
 
     public AvailabilitySlot getSlotById(UUID restaurantId, UUID slotId) {

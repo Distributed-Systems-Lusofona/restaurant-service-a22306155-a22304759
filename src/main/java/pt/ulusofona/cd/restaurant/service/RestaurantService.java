@@ -24,16 +24,16 @@ public class RestaurantService {
         return restaurantRepository.save(entity);
     }
 
-    public Restaurant getRestaurantsById(UUID id) {
-        return restaurantRepository.findById(id).orElseThrow(() -> new RestaurantNotFoundException("Restaurant not found: " + id));
+    public Restaurant getRestaurantsById(UUID restaurantId) {
+        return restaurantRepository.findById(restaurantId).orElseThrow(() -> new RestaurantNotFoundException("Restaurant not found: " + restaurantId));
     }
 
     public List<Restaurant> getAllRestaurants() {
         return restaurantRepository.findAll();
     }
 
-    public Restaurant updateRestaurant(UUID id, RestaurantRequest request) {
-        Restaurant restaurant = getRestaurantsById(id);
+    public Restaurant updateRestaurant(UUID restaurantId, RestaurantRequest request) {
+        Restaurant restaurant = getRestaurantsById(restaurantId);
 
         restaurant.setName(request.getName());
         restaurant.setCity(request.getCity());
@@ -44,8 +44,11 @@ public class RestaurantService {
         return restaurantRepository.save(restaurant);
     }
 
-    public void deleteRestaurant(UUID id) {
-        Restaurant restaurant = getRestaurantsById(id);
+    public void deleteRestaurant(UUID restaurantId) {
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new RestaurantNotFoundException(
+                        "Reservation not found with id: " + restaurantId));
+
         restaurantRepository.delete(restaurant);
     }
 }

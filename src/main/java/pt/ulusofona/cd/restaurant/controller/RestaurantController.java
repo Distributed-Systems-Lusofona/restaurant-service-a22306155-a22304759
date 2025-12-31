@@ -40,19 +40,19 @@ public class RestaurantController {
         return ResponseEntity.ok(responseList);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<RestaurantResponse> getById(@PathVariable UUID id) {
-        return ResponseEntity.ok(RestaurantMapper.toResponse(restaurantService.getRestaurantsById(id)));
+    @GetMapping("/{restaurantId}")
+    public ResponseEntity<RestaurantResponse> getById(@PathVariable UUID restaurantId) {
+        return ResponseEntity.ok(RestaurantMapper.toResponse(restaurantService.getRestaurantsById(restaurantId)));
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<RestaurantResponse> update(@PathVariable UUID id, @Valid @RequestBody RestaurantRequest request) {
-        return ResponseEntity.ok(RestaurantMapper.toResponse(restaurantService.updateRestaurant(id, request)));
+    @PutMapping("/{restaurantId}")
+    public ResponseEntity<RestaurantResponse> update(@PathVariable UUID restaurantId, @Valid @RequestBody RestaurantRequest request) {
+        return ResponseEntity.ok(RestaurantMapper.toResponse(restaurantService.updateRestaurant(restaurantId, request)));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        restaurantService.deleteRestaurant(id);
+    @DeleteMapping("/{restaurantId}")
+    public ResponseEntity<Void> delete(@PathVariable UUID restaurantId) {
+        restaurantService.deleteRestaurant(restaurantId);
         return ResponseEntity.noContent().build();
     }
 }
