@@ -7,8 +7,8 @@ Microservice developed in Java with Spring Boot to manage restaurants, menus, an
 The system was designed as a distributed application composed of several microservices:
 
 - **Restaurant Service**: manages restaurants, menu items, and availability slots.
-- **Reservation Service**: manages customer reservations and updates seat availability.
-- **Notification Service**: sends notifications related to reservations, cancellations, or availability changes.
+- **[Reservation Service](https://github.com/Distributed-Systems-Lusofona/reservation-service-a22306155-a22304759)**: manages customer reservations and updates seat availability.
+- **[Notification Service](https://github.com/Distributed-Systems-Lusofona/notification-service-a22306155-a22304759)**: sends notifications related to reservations, cancellations, or availability changes.
 
 This separation allows each service to evolve independently, keep a clear responsibility, and scale according to its own load.
 
@@ -186,21 +186,23 @@ GET /api/restaurants/{restaurantId}/availability?date=2026-07-11&time=20:00&part
 
 ## Configuration
 
-The main variables are in the `.env` file:
+Create a `.env` file in the project root with the required environment variables.
+
+Example:
 
 ```env
-PORT=8091
-APPLICATION_NAME=restaurant-service
+PORT=<application-port>
+APPICATION_NAME=<application-name>
 
-POSTGRES_DB=restaurant_db
-POSTGRES_USER=restaurant_user
-POSTGRES_PASSWORD=restaurant_secure_password_2025
+POSTGRES_DB=<database-name>
+POSTGRES_USER=<database-user>
+POSTGRES_PASSWORD=<database-password>
 
-PGADMIN_DEFAULT_EMAIL=admin@example.com
-PGADMIN_DEFAULT_PASSWORD=admin
+KAFKA_BOOTSTRAP_SERVERS=<kafka-host:port>
+
+PGADMIN_DEFAULT_EMAIL=<pgadmin-email>
+PGADMIN_DEFAULT_PASSWORD=<pgadmin-password>
 ```
-
-The application configuration is in `src/main/resources/application.yml`.
 
 Important points:
 
